@@ -14,6 +14,6 @@ next topic: Do some / learn the Markdown language, nice.
 
 Modified navigation. Further sub pages.
 
-## §8.09.2024
+## 18.09.2024
 
 eresweb.org went online.
