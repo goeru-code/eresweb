@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>P-T</title>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(19, 1fr);
+            grid-gap: 2px;
+        }
+
+        .grid-item {
+            border: 1px solid black;
+            padding: 2px;
+            padding-bottom: 25px;
+        }
+
+        .void {
+            border: 0px solid black;
+            padding-bottom: 15px;
+        }
+
+body {
+    background-color: #99CCFF;
+    color: black;
+    font-family: monospace;
+}
+.buttonspacer {
+  background: transparent;
+  color: transparent;
+  width: 90px;
+  border: 3px;
+  border-radius: 3px;
+  height: 16px;
+margin: 0px;
+
+}
+
+.buttonspacer2 {
+  background: transparent;
+  color: transparent;
+  width: 88px;
+  border: 3px;
+  border-radius: 3px;
+  height: 16px;
+margin: 0px;
+
+}
+.buttonblack {
+    position: sticky;
+    top: 0;
+    font-family: monospace;
+    background: black;
+    color: #fff;
+    width: 200px;
+    border: 3px;
+    border-radius: 3px;
+    height: 30px;
+    margin: 0px;
+}
+
+.buttonsolid {
+  position: sticky;
+  top: 0;
+  font-family: monospace;
+  background: black;
+  color: #fff;
+  width: 60px;
+  border: 3px;
+  border-radius: 3px;
+  height: 30px;
+  margin: 0px;
+}
+
+.buttonliquid {
+  position: sticky;
+  top: 0;
+  font-family: monospace;
+  background: orange;
+  color: #fff;
+  width: 60px;
+  border: 3px;
+  border-radius: 3px;
+  height: 30px;
+  margin: 0px;
+}
+
+.buttongas {
+  position: sticky;
+  top: 0;
+  font-family: monospace;
+  background: red;
+  color: #fff;
+  width: 60px;
+  border: 3px;
+  border-radius: 3px;
+  height: 30px;
+  margin: 0px;
+}
+
+.buttongray {
+    position: sticky;
+    top: 0;
+    font-family: monospace;
+    background: lightgray;
+    color: #fff;
+    width: 200px;
+    border: 3px;
+    border-radius: 3px;
+    height: 30px;
+    margin: 0px;
+}
+
+.buttonhome {
+    position: sticky;
+    top: 0;
+    font-family: monospace;
+    background: lightgreen;
+    color: #000;
+    width: 100px;
+    border: 3px;
+    border-radius: 3px;
+    height: 30px;
+    margin: 0px;
+}
+
+p {
+    font-size: 18px;
+    font-family: monospace;
+}
+
+ .default-div {
+    background-color: #99CCFF;
+    border: 2px solid black;
+    padding: 25px;
+    color: black;
+} 
+
+ .grayElement {
+color: gray;
+} 
+
+.special-div {
+    background-color: green;
+    border: 2px solid green;
+    padding: 10px;
+    color: white;
+  }
+
+  voidDiv {
+    border: 0px solid black;
+    padding: 20px;
+}
+
+.slider-container {
+    width: 1530px;
+  }
+  
+  .slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+    border-radius: 5px; /* Rounded corners for the slider track */
+  }
+  
+  .slider:hover {
+    opacity: 1;
+  }
+  
+  .slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: gray; /* Green thumb */
+    cursor: pointer;
+    border: 4px solid black; /* White border for better visibility */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+  }
+  
+  .slider::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #4CAF50;
+    cursor: pointer;
+    border: 2px solid black;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  #temperature {
+    margin-top: 10px;
+    font-size: 1em;
+  }
+    </style>
+</head>
+
+
+
+
+<label style="position: sticky; top: 0; margin-right: 1px;">eresweb.org v0.4 ### </label>
+
+
+
+
+
+
+
+<label style="position: sticky; top: 0; margin-right: 1px;">Periactive Table v0.2 ### github.com/goeru-code/periactiveTable</label>
+<br><br>
+<button class="buttonhome" onclick="showeresweb()" id="eresweb">eresweb.org</button>
+<button class="buttonspacer2"></button>
+<button class="buttongray" onclick="showGas()" id="gas">Gas at roomtemperature</button>
+<button class="buttongray" onclick="showLiquid()" id="liquid">Liquid at roomtemperature</button>
+<button id="solid" class="buttongray" onclick="showSolid()">Solid at roomtemperature</button>
+<button id="nature" class="buttongray" onclick="showNature()">Existing in nature</button>
+<button class="buttonspacer"></button>
+<button class="buttonblack" onclick="showAll(tempSlider.value)" id="all">Known elements (T)</button>
+<button class="buttonsolid"  id="buttonsolid">Solid</button>
+<button class="buttonliquid"  id="buttonliquid">Liquid</button>
+<button class="buttongas"  id="buttongas">Gas</button>
+<p></p>
+
+<body onload="showAll(tempSlider.value)">
+    <div class="slider-container" onclick="showAll(tempSlider.value)">
+        <input type="range" min="0" max="6300" value="0" class="slider" id="tempSlider">
+      </div>
+      
+      <div id="temperature" style="font-size: 150%">Temperature: 0K</div>
+    <p></p> <br> 
+    <div class="grid-container">
+        <div id="1" class="grid-item" data-element="gas" nature="y" melt=14 boil=20>H<br>Hydrogen<br>1</div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div id="2" class="grid-item" data-element="gas" nature="y" melt=0 boil=4>He<br>Helium<br>2</div>
+        <div id="3" class="grid-item" data-element="solid" nature="y" melt=454 boil=1603>Li<br>Lithium<br>3</div>
+        <div id="4" class="grid-item" data-element="solid" nature="y" melt=1560 boil=2742>Be<br>Beryllium<br>4</div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div id="5" class="grid-item" data-element="solid" nature="y" melt=2349 boil=4200>B<br>Boron<br>5</div>
+        <div id="6" class="grid-item" data-element="solid" nature="y" melt=3800 boil=4300>C<br>Carbon<br>6</div>
+        <div id="7" class="grid-item" data-element="gas" nature="y" melt=63 boil=77>N<br>Nitrogen<br>7</div>
+        <div id="8" class="grid-item" data-element="gas" nature="y" melt=54 boil=90>O<br>Oxygen<br>8</div>
+        <div id="9" class="grid-item" data-element="gas" nature="y" melt=53 boil=85>F<br>Fluorine<br>9</div>
+        <div id="10" class="grid-item" data-element="gas" nature="y" melt=25 boil="27">Ne<br>Neon<br>10</div>
+        <div id="11" class="grid-item" data-element="solid" nature="y" melt=371 boil=1156>Na<br>Sodium<br>11</div>
+        <div id="12" class="grid-item" data-element="solid" nature="y" melt=923 boil=1363>Mg<br>Magnesium<br>12</div>  
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div id="13" class="grid-item" data-element="solid" nature="y" melt=933 boil=2743>Al<br>Aluminum<br>13</div>
+        <div id="14" class="grid-item" data-element="solid" nature="y" melt=1687 boil=3538>Si<br>Silicon<br>14</div>
+        <div id="15" class="grid-item" data-element="solid" nature="y" melt=317 boil=550>P<br>Phosphorus<br>15</div>
+        <div id="16" class="grid-item" data-element="solid" nature="y" melt=368 boil=718>S<br>Sulfur<br>16</div>
+        <div id="17" class="grid-item" data-element="gas" nature="y" melt=171 boil=239>Cl<br>Chlorine<br>17</div>
+        <div id="18" class="grid-item" data-element="gas" nature="y" melt=84 boil=87>Ar<br>Argon<br>18</div>
+        <div id="19" class="grid-item" data-element="solid" nature="y" melt=337 boil=1032>K<br>Potassium<br>19</div>
+        <div id="20" class="grid-item" data-element="solid" nature="y" melt=1115 boil=1757>Ca<br>Calcium<br>20</div>
+        <div class="void"></div>
+        <div id="21" class="grid-item" data-element="solid" nature="y" melt=1814 boil=3109>Sc<br>Scandium<br>21</div>
+        <div id="22" class="grid-item" data-element="solid" nature="y" melt=1941 boil=3560>Ti<br>Titanium<br>22</div>
+        <div id="23" class="grid-item" data-element="solid" nature="y" melt=2183 boil=3680>V<br>Vanadium<br>23</div>
+        <div id="24" class="grid-item" data-element="solid" nature="y" melt=2180 boil=2755>Cr<br>Chromium<br>24</div>
+        <div id="25" class="grid-item" data-element="solid" nature="y" melt=1519 boil=2334>Mn<br>Manganese<br>25</div>
+        <div id="26" class="grid-item" data-element="solid" nature="y" melt=1811 boil=3134>Fe<br>Iron<br>26</div>
+        <div id="27" class="grid-item" data-element="solid" nature="y" melt=1768 boil=3200>Co<br>Cobalt<br>27</div>
+        <div id="28" class="grid-item" data-element="solid" nature="y" melt=1728 boil=3003>Ni<br>Nickel<br>28</div>
+        <div id="29" class="grid-item" data-element="solid" nature="y" melt=1358 boil=2835>Cu<br>Copper<br>29</div>
+        <div id="30" class="grid-item" data-element="solid" nature="y" melt=693 boil=1180>Zn<br>Zinc<br>30</div>
+        <div id="31" class="grid-item" data-element="solid" nature="y" melt=303 boil=2673>Ga<br>Gallium<br>31</div>
+        <div id="32" class="grid-item" data-element="solid" nature="y" melt=1211 boil=3106>Ge<br>Germanium<br>32</div>
+        <div id="33" class="grid-item" data-element="solid" nature="y" melt=1090 boil=887>As<br>Arsenic<br>33</div>
+        <div id="34" class="grid-item" data-element="solid" nature="y" melt=494 boil=958>Se<br>Selenium<br>34</div>
+        <div id="35" class="grid-item" data-element="liquid" nature="y" melt=266 boil=332>Br<br>Bromine<br>35</div>
+        <div id="36" class="grid-item" data-element="gas" nature="y" melt=116 boil=120>Kr<br>Krypton<br>36</div>
+        <div id="37" class="grid-item" data-element="solid" nature="y" melt=312 boil=961>Rb<br>Rubidium<br>37</div>
+        <div id="38" class="grid-item" data-element="solid" nature="y" melt=1050 boil=1650>Sr<br>Strontium<br>38</div>
+        <div class="void"></div>
+        <div id="39" class="grid-item" data-element="solid" nature="y" melt=1799 boil=3203>Y<br>Yttrium<br>39</div>
+        <div id="40" class="grid-item" data-element="solid" nature="y" melt=2128 boil=4650>Zr<br>Zirconium<br>40</div>
+        <div id="41" class="grid-item" data-element="solid" nature="y" melt=2750 boil=5017>Nb<br>Niobium<br>41</div>
+        <div id="42" class="grid-item" data-element="solid" nature="y" melt=2896 boil=4912>Mo<br>Molybdenum<br>42</div>
+        <div id="43" class="grid-item" data-element="solid" nature="y" melt=2430 boil=4538>Tc<br>Technetium<br>43</div>
+        <div id="44" class="grid-item" data-element="solid" nature="y" melt=2607 boil=4423>Ru<br>Ruthenium<br>44</div>
+        <div id="45" class="grid-item" data-element="solid" nature="y" melt=2237 boil=3968>Rh<br>Rhodium<br>45</div>
+        <div id="46" class="grid-item" data-element="solid" nature="y" melt=1828 boil=3236>Pd<br>Palladium<br>46</div>
+        <div id="47" class="grid-item" data-element="solid" nature="y" melt=1245 boil=2483>Ag<br>Silver<br>47</div>
+        <div id="48" class="grid-item" data-element="solid" nature="y" melt=594 boil=1040>Cd<br>Cadmium<br>48</div>
+        <div id="49" class="grid-item" data-element="solid" nature="y" melt=430 boil=2345>In<br>Indium<br>49</div>
+        <div id="50" class="grid-item" data-element="solid" nature="y" melt=505 boil=2875>Sn<br>Tin<br>50</div>
+        <div id="51" class="grid-item" data-element="solid" nature="y" melt=905 boil=1908>Sb<br>Antimony<br>51</div>
+        <div id="52" class="grid-item" data-element="solid" nature="y" melt=723 boil=1261>Te<br>Tellurium<br>52</div>
+        <div id="53" class="grid-item" data-element="solid" nature="y" melt=387 boil=457>I<br>Iodine<br>53</div>
+        <div id="54" class="grid-item" data-element="gas" nature="y" melt=161 boil=165>Xe<br>Xenon<br>54</div>
+        <div id="55" class="grid-item" data-element="solid" nature="y" melt=302 boil=944>Cs<br>Caesium<br>55</div>
+        <div id="56" class="grid-item" data-element="solid" nature="y" melt=1000 boil=1910>Ba<br>Barium<br>56</div>
+        <div id="fblock1" class="grid-item" data-element="solid" nature="y">f block 1<br>57-70</div>
+        <div id="71" class="grid-item" data-element="solid" nature="y" melt=1925 boil=3675>Lu<br>Lutetium<br>71</div>
+        <div id="72" class="grid-item" data-element="solid" nature="y" melt=2506 boil=4876>Hf<br>Hafnium<br>72</div>
+        <div id="73" class="grid-item" data-element="solid" nature="y" melt=3290 boil=5731>Ta<br>Tantalum<br>73</div>
+        <div id="74" class="grid-item" data-element="solid" nature="y" melt=3695 boil=6203>W<br>Tungsten<br>74</div>
+        <div id="75" class="grid-item" data-element="solid" nature="y" melt=3459 boil=5869>Re<br>Rhenium<br>75</div>
+        <div id="76" class="grid-item" data-element="solid" nature="y" melt=3306 boil=5285>Os<br>Osmium<br>76</div>
+        <div id="77" class="grid-item" data-element="solid" nature="y" melt=2719 boil=4403>Ir<br>Iridium<br>77</div>
+        <div id="78" class="grid-item" data-element="solid" nature="y" melt=2041 boil=4098>Pt<br>Platinum<br>78</div>
+        <div id="79" class="grid-item" data-element="solid" nature="y" melt=1337 boil=3243>Au<br>Gold<br>79</div>
+        <div id="80" class="grid-item" data-element="liquid" nature="y" melt=234 boil=630>Hg<br>Mercury<br>80</div>
+        <div id="81" class="grid-item" data-element="solid" nature="y" melt=577 boil=1746>Tl<br>Thallium<br>81</div>
+        <div id="82" class="grid-item" data-element="solid" nature="y" melt=601 boil=2022>Pb<br>Lead<br>82</div>
+        <div id="83" class="grid-item" data-element="solid" nature="y" melt=545 boil=1837>Bi<br>Bismuth<br>83</div>
+        <div id="84" class="grid-item" data-element="solid" nature="y" melt=527 boil=1235>Po<br>Polonium<br>84</div>
+        <div id="85" class="grid-item" data-element="solid" nature="y" melt=575 boil=503>At<br>Astatine<br>85</div>
+        <div id="86" class="grid-item" data-element="gas" nature="y" melt=202 boil=212>Rn<br>Radon<br>86</div>
+        <div id="87" class="grid-item" data-element="solid" nature="y" melt=281 boil=890>Fr<br>Francium<br>87</div>
+        <div id="88" class="grid-item" data-element="solid" nature="y" melt=973 boil=2010>Ra<br>Radium<br>88</div>
+        <div id="fblock2" class="grid-item" data-element="solid">f block 2<br>89-102</div>
+        <div id="103" class="grid-item" data-element="solid" melt=1900 boil=>Lr<br>Lawrencium<br>103</div>
+        <div id="104" class="grid-item" data-element="solid" melt=2400 boil=>Rf<br>Rutherfordium<br>104</div>
+        <div id="105" class="grid-item" data-element="solid" melt=99999 boil=99999>Db<br>Dubnium<br>105</div>
+        <div id="106" class="grid-item" data-element="solid" melt=99999 boil=99999>Sg<br>Seaborgium<br>106</div>
+        <div id="107" class="grid-item" data-element="solid" melt=99999 boil=99999>Bh<br>Bohrium<br>107</div>
+        <div id="108" class="grid-item" data-element="solid" melt=99999 boil=99999>Hs<br>Hassium<br>108</div>
+        <div id="109" class="grid-item" data-element="solid" melt=99999 boil=99999>Mt<br>Meitnerium<br>109</div>
+        <div id="110" class="grid-item" data-element="solid" melt=99999 boil=99999>Ds<br>Darmstadtium<br>110</div>
+        <div id="111" class="grid-item" data-element="solid" melt=99999 boil=99999>Rg<br>Roentgenium<br>111</div>
+        <div id="112" class="grid-item" data-element="solid" melt=283 boil=>Cn<br>Copernicium<br>112</div>
+        <div id="113" class="grid-item" data-element="solid" melt=700 boil=1430>Nh<br>Nihonium<br>113</div>
+        <div id="114" class="grid-item" data-element="solid" melt=200 boil=380>Fl<br>Flerovium<br>114</div>
+        <div id="115" class="grid-item" data-element="solid" melt=670 boil=1400>Mc<br>Moscovium<br>115</div>
+        <div id="116" class="grid-item" data-element="solid" melt=637 boil=1035>Lv<br>Livermorium<br>116</div>
+        <div id="117" class="grid-item" data-element="solid" melt=623 boil=883>Ts<br>Tennessine<br>117</div>
+        <div id="118" class="grid-item" data-element="solid" melt=325 boil=450>Og<br>Oganesson<br>118</div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        
+        <div id="57" class="grid-item" data-element="solid" nature="y" melt=1193 boil=3737>La<br>Lanthanum<br>57</div>
+        <div id="58" class="grid-item" data-element="solid" nature="y" melt=1068 boil=3716>Ce<br>Cerium<br>58</div>
+        <div id="59" class="grid-item" data-element="solid" nature="y" melt=1208 boil=3403>Pr<br>Praseodymnium<br>59</div>
+        <div id="60" class="grid-item" data-element="solid" nature="y" melt=1297 boil=3347>Nd<br>Neodymium<br>60</div>
+        <div id="61" class="grid-item" data-element="solid" nature="y" melt=1315 boil=3273>Pm<br>Promethium<br>61</div>
+        <div id="62" class="grid-item" data-element="solid" nature="y" melt=1345 boil=2173>Sm<br>Samarium<br>62</div>
+        <div id="63" class="grid-item" data-element="solid" nature="y" melt=1099 boil=1802>Eu<br>Europium<br>63</div>
+        <div id="64" class="grid-item" data-element="solid" nature="y" melt=1585 boil=3546>Gd<br>Gadolinium<br>64</div>
+        <div id="65" class="grid-item" data-element="solid" nature="y" melt=1629 boil=3396>Tb<br>Terbium<br>65</div>
+        <div id="66" class="grid-item" data-element="solid" nature="y" melt=1680 boil=2840>Dy<br>Dysprosium<br>66</div>
+        <div id="67" class="grid-item" data-element="solid" nature="y" melt=1734 boil=2873>Ho<br>Holmium<br>67</div>
+        <div id="68" class="grid-item" data-element="solid" nature="y" melt=1802 boil=3141>Er<br>Erbium<br>68</div>
+        <div id="69" class="grid-item" data-element="solid" nature="y" melt=1818 boil=2223>Tm<br>Thulium<br>69</div>
+        <div id="70" class="grid-item" data-element="solid" nature="y" melt=1097 boil=1469>Yb<br>Ytterbium<br>70</div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        <div class="void"></div>
+        
+        
+        <div id="89" class="grid-item" data-element="solid" nature="y" melt=1323 boil=3471>Ac<br>Actinium<br>89</div>
+        <div id="90" class="grid-item" data-element="solid" nature="y" melt=2115 boil=5061>Th<br>Thorium<br>90</div>
+        <div id="91" class="grid-item" data-element="solid" nature="y" melt=1841 boil=4300>Pa<br>Protactinium<br>91</div>
+        <div id="92" class="grid-item" data-element="solid" nature="y" melt=1405 boil=4404>U<br>Uranium<br>92</div>
+        <div id="93" class="grid-item" data-element="solid" nature="y" melt=917 boil=4273>Np<br>Neptunium<br>93</div>
+        <div id="94" class="grid-item" data-element="solid" nature="y" melt=913 boil=3501>Pu<br>Plutonium<br>94</div>
+        <div id="95" class="grid-item" data-element="solid" melt=1449 boil=2880>Am<br>Americium<br>95</div>
+        <div id="96" class="grid-item" data-element="solid" melt=1613 boil=3383>Cm<br>Curium<br>96</div>
+        <div id="97" class="grid-item" data-element="solid" melt=1323 boil=2900>Bk<br>Berkelium<br>97</div>
+        <div id="98" class="grid-item" data-element="solid" melt=1173 boil=1743>Cf<br>Californium<br>98</div>
+        <div id="99" class="grid-item" data-element="solid" melt=1133 boil=1269>Es<br>Einsteinium<br>99</div>
+        <div id="100" class="grid-item" data-element="solid" melt=1800 boil=99999>Fm<br>Fermium<br>100</div>
+        <div id="101" class="grid-item" data-element="solid" melt=1100 boil=99999>Md<br>Mendelevium<br>101</div>
+        <div id="102" class="grid-item" data-element="solid" melt=1100 boil=99999>No<br>Nobelium<br>102</div> 
+    </div>
+</body>
+<script>
+
+function showGas() {        
+           const button = document.getElementById("gas");
+           button.style.backgroundColor = "darkblue";
+           const button1 = document.getElementById("liquid");
+           button1.style.backgroundColor = "lightgrey";
+           const button2 = document.getElementById("all");
+           button2.style.backgroundColor = "lightgrey";
+           const button3 = document.getElementById("solid");
+           button3.style.backgroundColor = "lightgrey";
+           const button4 = document.getElementById("nature");
+           button4.style.backgroundColor = "lightgrey";
+           const gridContainer = document.querySelector('.grid-container');
+           const divs = gridContainer.querySelectorAll('div');
+           divs.forEach(div => {
+            if (div.getAttribute('data-element') == "gas") {
+            div.style.backgroundColor = "darkblue"; div.style.color = "white";}
+            else if (div.getAttribute('data-element') == "solid")  {
+               div.style.backgroundColor = "lightgray";
+               div.style.color = "gray";
+            }
+            else if (div.getAttribute('data-element') == "liquid")  {
+                div.style.backgroundColor = "lightgray";
+                div.style.color = "gray";
+             }
+           });
+           const element = document.getElementById("tempSlider");
+  element.style.visibility = "hidden";
+  const element2 = document.getElementById("temperature");
+  element2.style.visibility = "hidden";
+  const element3 = document.getElementById("buttonsolid");
+  element3.style.visibility = "hidden";
+  const element4 = document.getElementById("buttonliquid");
+  element4.style.visibility = "hidden";
+  const element5 = document.getElementById("buttongas");
+  element5.style.visibility = "hidden";
+       }
+
+
+
+       function showLiquid() {
+           const button4 = document.getElementById("gas");
+           button4.style.backgroundColor = "lightgray";
+           const button5 = document.getElementById("liquid");
+           button5.style.backgroundColor = "darkblue";
+           const button6 = document.getElementById("all");
+           button6.style.backgroundColor = "lightgray";
+           const button7 = document.getElementById("solid");
+           button7.style.backgroundColor = "lightgray";
+           const button8 = document.getElementById("nature");
+           button8.style.backgroundColor = "lightgrey";
+           const gridContainer = document.querySelector('.grid-container');
+           const divs = gridContainer.querySelectorAll('div');
+           divs.forEach(div => {
+            if (div.getAttribute('data-element') == "liquid") {
+            div.style.backgroundColor = "darkblue"; div.style.color = "white";}
+            else if (div.getAttribute('data-element') == "solid")  {
+               div.style.backgroundColor = "lightgray";
+               div.style.color = "gray";
+            }
+            else if (div.getAttribute('data-element') == "gas")  {
+                div.style.backgroundColor = "lightgray";
+                div.style.color = "gray";
+             }
+            });
+            const element = document.getElementById("tempSlider");
+  element.style.visibility = "hidden";
+  const element2 = document.getElementById("temperature");
+  element2.style.visibility = "hidden";
+  const element3 = document.getElementById("buttonsolid");
+  element3.style.visibility = "hidden";
+  const element4 = document.getElementById("buttonliquid");
+  element4.style.visibility = "hidden";
+  const element5 = document.getElementById("buttongas");
+  element5.style.visibility = "hidden";
+       }
+
+
+
+       function showSolid() {
+           const button12 = document.getElementById("gas");
+           button12.style.backgroundColor = "lightgray";
+           const button13 = document.getElementById("liquid");
+           button13.style.backgroundColor = "lightgray";
+           const button14 = document.getElementById("all");
+           button14.style.backgroundColor = "lightgray";
+           const button15 = document.getElementById("solid");
+           button15.style.backgroundColor = "darkblue";
+           const button16 = document.getElementById("nature");
+           button16.style.backgroundColor = "lightgrey";
+           const gridContainer = document.querySelector('.grid-container');
+           const divs = gridContainer.querySelectorAll('div');
+           divs.forEach(div => {
+            if (div.getAttribute('data-element') == "solid") {
+            div.style.backgroundColor = "darkblue"; div.style.color = "white";}
+            else if (div.getAttribute('data-element') == "liquid")  {
+               div.style.backgroundColor = "lightgray";
+               div.style.color = "gray";
+            }
+            else if (div.getAttribute('data-element') == "gas")  {
+                div.style.backgroundColor = "lightgray";
+                div.style.color = "gray";
+             }
+            });
+            const element = document.getElementById("tempSlider");
+            element.style.visibility = "hidden";
+            const element2 = document.getElementById("temperature");
+            element2.style.visibility = "hidden";
+            const element3 = document.getElementById("buttonsolid");
+            element3.style.visibility = "hidden";
+            const element4 = document.getElementById("buttonliquid");
+            element4.style.visibility = "hidden";
+            const element5 = document.getElementById("buttongas");
+            element5.style.visibility = "hidden";
+       }
+
+       
+
+       function showNature() {
+        const button12 = document.getElementById("gas");
+        button12.style.backgroundColor = "lightgray";
+        const button13 = document.getElementById("liquid");
+        button13.style.backgroundColor = "lightgray";
+        const button14 = document.getElementById("all");
+        button14.style.backgroundColor = "lightgray";
+        const button15 = document.getElementById("solid");
+        button15.style.backgroundColor = "lightgray";
+        const button16 = document.getElementById("nature");
+        button16.style.backgroundColor = "green";
+        const gridContainer = document.querySelector('.grid-container');
+        const divs = gridContainer.querySelectorAll('div');
+        divs.forEach(div => {
+         if (div.getAttribute('nature') == "y") {
+         div.style.backgroundColor = "green"; div.style.color = "white";}
+         else if (div.getAttribute('data-element') == "liquid")  {
+            div.style.backgroundColor = "lightgray";
+            div.style.color = "gray";
+         }
+         else if (div.getAttribute('data-element') == "gas")  {
+             div.style.backgroundColor = "lightgray";
+             div.style.color = "gray";
+          }
+          else if (div.getAttribute('data-element') == "solid")  {
+            div.style.backgroundColor = "lightgray";
+            div.style.color = "gray";
+         }
+         });
+         const element = document.getElementById("tempSlider");
+         element.style.visibility = "hidden";
+         const element2 = document.getElementById("temperature");
+         element2.style.visibility = "hidden";
+         const element3 = document.getElementById("buttonsolid");
+         element3.style.visibility = "hidden";
+         const element4 = document.getElementById("buttonliquid");
+         element4.style.visibility = "hidden";
+         const element5 = document.getElementById("buttongas");
+         element5.style.visibility = "hidden";
+    }
+
+
+    const slider = document.getElementById("tempSlider");
+const output = document.getElementById("temperature");
+output.innerHTML = "Temperature: " + slider.value + "K"; // Display the default value
+
+slider.oninput = function() {
+  output.innerHTML = "Temperature: " + this.value + "K";
+}
+
+
+
+function showAll(temp) {
+   const button8 = document.getElementById("gas");
+   button8.style.backgroundColor = "lightgray";
+   const button9 = document.getElementById("liquid");
+   button9.style.backgroundColor = "lightgray";
+   const button10 = document.getElementById("all");
+   button10.style.backgroundColor = "black";
+   const button11 = document.getElementById("solid");
+   button11.style.backgroundColor = "lightgrey";
+   const button12 = document.getElementById("nature");
+   button12.style.backgroundColor = "lightgrey";
+   const gridContainer = document.querySelector('.grid-container');
+   const divs = gridContainer.querySelectorAll('div');
+   divs.forEach(div => {
+       if (div.id>0 && div.getAttribute('melt') <= parseInt(temp) && div.getAttribute('boil') > parseInt(temp)) {
+         div.style.backgroundColor = "orange";
+         div.style.color = "white";
+      }  
+        else if  (div.id>0 && div.getAttribute('melt') > parseInt(temp) ) {
+            div.style.backgroundColor = "black";
+            div.style.color = "white";
+         }
+         else if  (div.id>0 && div.getAttribute('boil') < parseInt(temp) ) {
+            div.style.backgroundColor = "red";
+            div.style.color = "white";
+         }
+
+
+         else div.style = "default";
+
+   })
+   const element = document.getElementById("tempSlider");
+element.style.visibility = "visible";
+const element2 = document.getElementById("temperature");
+element2.style.visibility = "visible";
+const element3 = document.getElementById("buttongas");
+element3.style.visibility = "visible";
+const element4 = document.getElementById("buttonliquid");
+element4.style.visibility = "visible";
+const element5 = document.getElementById("buttonsolid");
+element5.style.visibility = "visible";
+}
+
+function showeresweb() {
+           //document.querySelector('header').innerHTML = "Blog";
+           //document.getElementById('p1').innerText = "blog<br>ggggg";
+           location.href = "index.html";
+       }
+</script>
+
+</html>
